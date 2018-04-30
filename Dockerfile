@@ -4,7 +4,16 @@ FROM biocorecrg/debian-perlbrew-pyenv3:stretch
 MAINTAINER Toni Hermoso Pulido <toni.hermoso@crg.eu>
 
 ARG SUPPA_VERSION=2.3
+ARG CRAN_VERSION=34
 
+# Adding R
+RUN echo "deb http://cran.rstudio.com/bin/linux/debian stretch-cran${CRAN_VERSION}/" >> /etc/apt/sources.list
+RUN apt-get install dirmngr
+RUN apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends r-base r-base-dev
+
+# Installing SUPPA
 RUN mkdir -p /usr/local/suppa
 WORKDIR /tmp
 
