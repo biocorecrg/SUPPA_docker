@@ -20,3 +20,19 @@ Example running command:
 Try to reproduce what is here: https://github.com/comprna/SUPPA/wiki/SUPPA2-tutorial
 
 
+
+    cd ~/myshared; git clone https://github.com/comprna/SUPPA_supplementary_data/
+
+    prefetch SRR1513329
+
+    fastq-dump --outdir /home/toniher/tmp/suppa/fastq/ --split-files /home/toniher/ncbi/public/sra/SRR1513329.sra     
+
+    mkdir -p ~/myshared/index
+
+    docker exec mysuppa salmon index -t /share/SUPPA_supplementary_data/annotation/hg19_EnsenmblGenes_sequence_ensenmbl.fasta.gz -i /share/index/Ensembl_hg19_salmon_index
+    
+    mkdir -p ~/myshared/quant
+
+    docker exec mysuppa salmon quant -i /share/index/Ensembl_hg19_salmon_index -l ISF --gcBias -1 /share/fastq/SRR1513329_1.fastq -2 /share/fastq/SRR1513329_2.fastq -p 4 -o /share/quant/SRR1513329
+
+
