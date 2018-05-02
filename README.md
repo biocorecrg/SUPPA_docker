@@ -35,4 +35,10 @@ Try to reproduce what is here: https://github.com/comprna/SUPPA/wiki/SUPPA2-tuto
 
     docker exec mysuppa salmon quant -i /share/index/Ensembl_hg19_salmon_index -l ISF --gcBias -1 /share/fastq/SRR1513329_1.fastq -2 /share/fastq/SRR1513329_2.fastq -p 4 -o /share/quant/SRR1513329
 
+    docker exec mysuppa python /usr/local/suppa/multipleFieldSelection.py -i /share/quant/SRR1513329/quant.sf -k 1 -f 4 -o /share/iso_tpm.txt
+
+    docker exec mysuppa Rscript /usr/local/suppa/scripts/format_Ensembl_ids.R /share/iso_tpm.txt
+
+    docker exec mysuppa python /usr/local/suppa/suppa.py generateEvents -i /share/SUPPA_supplementary_data/annotation/Homo_sapiens.GRCh37.75.formatted.gtf.gzip -o /share/output/ensembl_hg19.events.ioe -f ioe -e SE SS MX RI FL
+
 
