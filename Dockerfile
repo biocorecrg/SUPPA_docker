@@ -41,6 +41,7 @@ RUN chmod +x /usr/local/bin/suppa
 RUN rm -rf v${SUPPA_VERSION}.tar.gz SUPPA-${SUPPA_VERSION}
 
 RUN pip install -I SUPPA==${SUPPA_VERSION}
+RUN pip install matplotlib
 
 # Back workdir
 WORKDIR /project

@@ -41,4 +41,17 @@ Try to reproduce what is here: https://github.com/comprna/SUPPA/wiki/SUPPA2-tuto
 
     docker exec mysuppa python /usr/local/suppa/suppa.py generateEvents -i /share/SUPPA_supplementary_data/annotation/Homo_sapiens.GRCh37.75.formatted.gtf.gzip -o /share/output/ensembl_hg19.events.ioe -f ioe -e SE SS MX RI FL
 
+    docker exec mysuppa sh -c  "gunzip -c  /share/SUPPA_supplementary_data/annotation/Homo_sapiens.GRCh37.75.formatted.gtf.gz > /share/SUPPA_supplementary_data/annotation/Homo_sapiens.GRCh37.75.formatted.gtf " 
 
+    mkdir -p ~/myshared/events
+   
+    docker exec mysuppa python /usr/local/suppa/suppa.py generateEvents -i /share/SUPPA_supplementary_data/annotation/Homo_sapiens.GRCh37.75.formatted.gtf -o /share/events/ensembl_hg19.events.ioe -f ioe -e SE SS MX RI FL
+
+    docker exec mysuppa sh -c "cd /share/events/; awk ' FNR==1 && NR!=1 { while (/^<header>/) getline; }  1 {print} ' *.ioe > ensembl_hg19.events.ioe"
+
+    docker exec mysuppa python /usr/local/suppa/suppa.py psiPerEvent -i /share/events/ensembl_hg19.events.ioe -e /share/iso_tpm_formatted.txt -o /share/events/TRA2_events
+
+    mkdir -p ~/myshared/plots
+
+    docker exec mysuppa python /usr/local/suppa/scripts/generate_boxplot_event.py -i /share/events/TRA2_events.psi -e "ENSG00000149554;SE:chr11:125496728-125497502:125497725-125499127:+" -g 1-3,4-6 -c NC,KD -o /share/plots
+ 
