@@ -2,6 +2,8 @@ FROM biocorecrg/debian-perlbrew-pyenv3:stretch
 
 # File Author / Maintainer
 MAINTAINER Toni Hermoso Pulido <toni.hermoso@crg.eu>
+MAINTAINER Luca Cozzuto <luca.cozzuto@crg.eu>
+
 
 ARG SUPPA_VERSION=2.3
 ARG CRAN_VERSION=34
